@@ -106,6 +106,14 @@ def get_turf_image(request, turf_id):
     serializer = ImageSerializer(images, many=True)
     return Response(serializer.data)
 
+def create_turf_image(request, turf_id):
+    data = request.data.copy()
+    data['turf'] = turf_id
+    serializer = ImageSerializer(data=data, many=False)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def get_schedules(request):
     schedules = Schedule.objects.all()

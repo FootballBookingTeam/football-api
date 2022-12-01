@@ -31,7 +31,7 @@ class Turf(models.Model):
 class Image(models.Model):
     turf = models.ForeignKey(
         Turf, on_delete=models.CASCADE, related_name="turf_image")
-    image = models.ImageField(blank=True, null=True, upload_to='turf_image')
+    image = models.CharField(max_length=999, null=True, blank=True)
 
 
 class Schedule(models.Model):

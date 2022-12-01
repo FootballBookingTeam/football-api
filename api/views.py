@@ -14,7 +14,8 @@ from .utils import (
     get_schedules,
     get_schedule,
     update_schedule,
-    create_schedule
+    create_schedule,
+    create_turf_image
 )
 # Create your views here.
 
@@ -57,10 +58,12 @@ def get_user(request, id):
         return delete_user(request, id)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def get_turf_images(request, turf_id):
     if request.method == "GET":
         return get_turf_image(request, turf_id)
+    elif request.method == "POST":
+        return create_turf_image(request, turf_id)
 
 
 @api_view(["GET", "POST"])
