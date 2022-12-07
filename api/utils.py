@@ -5,7 +5,6 @@ from .serializers import UserSerializer, TurfSerializer, ImageSerializer, Schedu
 from rest_framework import status
 from rest_framework.exceptions import AuthenticationFailed
 from datetime import datetime, timedelta
-from .helper import user_authentication
 
 
 def get_turf_list(request):
@@ -68,7 +67,8 @@ def get_login(request):
     response.set_cookie(key='jwt', value=token)
     response.data = {
         'jwt': token,
-        'detail': 'Login successfully'
+        'detail': 'Login successfully',
+        'user_id': user.id
     }
 
     return response
@@ -141,8 +141,6 @@ def update_schedule(request, id):
 
 def create_schedule(request):
     data = request.data.copy()
-    payload = user_authentication(request)
-    data['user'] = payload['id']
     # TODO: calculate total money
     schedule = Schedule.objects.filter(
         start_time__gte=data['start_time'], start_time__lt=data['end_time'])

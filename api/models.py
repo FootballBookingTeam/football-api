@@ -21,6 +21,7 @@ class Turf(models.Model):
     TYPE_ENUM = [
         ("TURF5", "TURF5"),
         ("TURF7", "TURF7"),
+        ("TURF11", "TURF11"),
     ]
     type = models.CharField(max_length=10, choices=TYPE_ENUM, default="TURF5")
     price = models.FloatField(default=0.0)
