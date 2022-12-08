@@ -143,12 +143,11 @@ def create_schedule(request):
     data = request.data.copy()
     payload = user_authentication(request)
     data['user'] = payload['id']
-    # TODO: Calculate total and check whether schedule is using or not
-    # schedule = Schedule.objects.filter(
-    #     recordDate__gte=data['start_time'], recordDate__lt=data['end_time'])
-    # if schedule is not None:
-    #     if schedule.status == "PLAYING":
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # TODO: calculate total money
+    schedule = Schedule.objects.filter(
+        start_time__gte=data['start_time'], start_time__lt=data['end_time'])
+    if schedule:
+        return Response({'detail': 'The turf was scheduled'}, status=status.HTTP_400_BAD_REQUEST)
     serializer = ScheduleSerializer(data=data, many=False)
     if serializer.is_valid():
         serializer.save()

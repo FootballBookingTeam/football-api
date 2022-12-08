@@ -54,13 +54,6 @@ class TestTurf(APITestCase):
         res = self.client.post(reverse('turfs'), self.errorData , format='json')
         self.assertEqual(res.status_code, 400)
         self.assertEqual(Turf.objects.count(),0)
-
-    # def test_create_turf_already_exists(self):
-    #     res = self.client.post(reverse('turfs'), self.data, format='json')
-    #     self.assertEqual(res.status_code, 200)
-    #     res_2 = self.client.post(reverse('turfs'), self.data, format='json')
-    #     self.assertEqual(res_2.status_code, 400)
-    #     self.assertEqual(Turf.objects.count(),1)
     
     def test_update_turf_with_new_data(self):
         createRes = self.client.post(reverse('turfs'), self.data, format='json')
@@ -103,7 +96,7 @@ class TestTurf(APITestCase):
     #     self.assertEqual(Turf.objects.count(), 2)
 
     #     updateRes = self.client.put(reverse('turf', args=('1')), self.newData, format='json')
-    #     self.assertEqual(updateRes.status_code, 400)
+    #     self.assertEqual(updateRes.status_code, 200)
     #     self.assertEqual(Turf.objects.count(), 2)
 
     
@@ -129,3 +122,27 @@ class TestTurf(APITestCase):
         self.assertEqual(deleteRes_2.status_code, 200)
 
         self.assertEqual(Turf.objects.count(), 0)
+
+    def get_turfs_list(self):
+        createRes = self.client.post(reverse('turfs'), self.data, format='json')
+        self.assertEqual(createRes.status_code, 200)
+        self.assertEqual(Turf.objects.get().id, 1)
+
+        createRes_2 = self.client.post(reverse('turfs'), self.newData, format='json')
+        self.assertEqual(createRes_2.status_code, 200)
+        self.assertEqual(Turf.objects.count(), 2)
+
+        res = self.client.get(reverse('turfs'), format='json')
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(len(res.data), 2)
+    
+    def get_turf_detail(self):
+        createRes = self.client.post(reverse('turfs'), self.data, format='json')
+        self.assertEqual(createRes.status_code, 200)
+        self.assertEqual(Turf.objects.count(), 1)
+
+        detailRes = self.client.get(reverse('turf', args=('1')), format='json')
+        self.assertEqual(createRes.status_code, 200)
+        self.assertEqual(Turf.objects.get().name, detailRes.data['name'])
+
+    
