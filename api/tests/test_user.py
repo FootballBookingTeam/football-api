@@ -139,14 +139,3 @@ class TestUser(APITestCase):
         self.assertEqual(deleteRes_2.status_code, 200)
 
         self.assertEqual(User.objects.count(), 0)
-
-
-
-    # def test_login_correct(self):
-    #     # Error
-    #     createRes = self.client.post(reverse('users'), self.data, format='json')
-    #     self.assertEqual(createRes.status_code, 200)
-    #     self.assertEqual(User.objects.get().id, 1)
-    #     self.assertEqual(User.objects.count(), 1)
-    #     res = self.client.post(reverse('login'),self.data , format='json')
-    #     self.assertEqual(res.status_code, 200)

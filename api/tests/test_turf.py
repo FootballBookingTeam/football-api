@@ -85,20 +85,6 @@ class TestTurf(APITestCase):
         self.assertEqual(updateRes.status_code, 400)
         self.assertEqual(Turf.objects.get().name , self.data['name'])
         self.assertEqual(Turf.objects.count(),1)
-
-    # def test_update_turf_with_another_turf_already_exists(self):
-    #     createRes = self.client.post(reverse('turfs'), self.data, format='json')
-    #     self.assertEqual(createRes.status_code, 200)
-    #     self.assertEqual(Turf.objects.get().id, 1)
-
-    #     createRes_2 = self.client.post(reverse('turfs'), self.newData, format='json')
-    #     self.assertEqual(createRes_2.status_code, 200)
-    #     self.assertEqual(Turf.objects.count(), 2)
-
-    #     updateRes = self.client.put(reverse('turf', args=('1')), self.newData, format='json')
-    #     self.assertEqual(updateRes.status_code, 200)
-    #     self.assertEqual(Turf.objects.count(), 2)
-
     
     def test_delete_turf(self):
         createRes = self.client.post(reverse('turfs'), self.data, format='json')
